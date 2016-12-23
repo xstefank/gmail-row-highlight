@@ -5,12 +5,27 @@
   "description": "This extension is highlighting gmail rows.",
   "version": "1.0",
 
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+
   "browser_action": {
     "default_icon": "gmail.png",
     "default_popup": "popup_index.html"
   },
+
   "permissions": [
-    "activeTab",
-    "https://ajax.googleapis.com/"
+    "identity",
+    "*://*.google.com/*"
+  ],
+
+  "web_accessible_resources": [
+    "jquery-1.10.2.min.js",
+    "gmail.js",
+    "main.js"
   ]
+
 }
