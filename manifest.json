@@ -8,7 +8,7 @@
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
-      "js": ["content.js"]
+      "js": ["mutation-summary.js", "content.js"]
     }
   ],
 
@@ -18,14 +18,10 @@
   },
 
   "permissions": [
-    "identity",
     "*://*.google.com/*"
   ],
 
   "web_accessible_resources": [
-    "jquery-1.10.2.min.js",
-    "gmail.js",
-    "main.js"
   ]
 
 }

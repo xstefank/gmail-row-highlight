@@ -1,12 +1,18 @@
 
-var j = document.createElement('script');
-j.src = chrome.extension.getURL('jquery-1.10.2.min.js');
-(document.head || document.documentElement).appendChild(j);
+var tabindexObserver = new MutationSummary({
+    callback: tabindexChangeHandler,
+    queries: [{ attribute: 'tabindex' }]
+});
 
-var g = document.createElement('script');
-g.src = chrome.extension.getURL('gmail.js');
-(document.head || document.documentElement).appendChild(g);
+function tabindexChangeHandler(trs) {
+    var tr = trs[0];
+    tr.valueChanged.forEach(function(changeEl) {
+        var currentValue = changeEl.getAttribute('tabindex');
 
-var s = document.createElement('script');
-s.src = chrome.extension.getURL('main.js');
-(document.head || document.documentElement).appendChild(s);
+        if (currentValue == 0) {
+            changeEl.style.backgroundColor = "yellow";
+        } else {
+            changeEl.style.backgroundColor = "initial";
+        }
+    });
+}
