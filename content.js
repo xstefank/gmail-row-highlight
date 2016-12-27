@@ -2,6 +2,9 @@
 var defBgColor = null;
 var defColor = null;
 
+var userBgColor = "#A0A0A0";
+var userColor = "#E0E0E0";
+
 var tabindexObserver = new MutationSummary ({
     callback: tabindexChangeHandler,
     queries: [{ attribute: 'tabindex' }]
@@ -14,11 +17,9 @@ function tabindexChangeHandler(trs) {
 
         if (currentValue == 0) {
             preserveDefaultColor(changeEl);
-            changeEl.style.backgroundColor = "#A0A0A0";
-            changeEl.style.color = "#E0E0E0";
+            setRowColor(changeEl, userBgColor, userColor);
         } else {
-            changeEl.style.backgroundColor = defBgColor;
-            changeEl.style.color = defColor;
+            setRowColor(changeEl, defBgColor, defColor);
         }
     });
 }
@@ -28,5 +29,10 @@ function preserveDefaultColor(elem) {
 
     defBgColor = elem.style.backgroundColor;
     defColor = elem.style.color;
+}
+
+function setRowColor(elem, bgCol, col) {
+    elem.style.backgroundColor = bgCol;
+    elem.style.color = col;
 }
 
