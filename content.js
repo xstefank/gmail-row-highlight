@@ -14,8 +14,8 @@ function tabindexChangeHandler(trs) {
 
         if (currentValue == 0) {
             preserveDefaultColor(changeEl);
-            changeEl.style.backgroundColor = "yellow";
-            changeEl.style.color = "blue";
+            changeEl.style.backgroundColor = "#A0A0A0";
+            changeEl.style.color = "#E0E0E0";
         } else {
             changeEl.style.backgroundColor = defBgColor;
             changeEl.style.color = defColor;
