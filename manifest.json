@@ -13,8 +13,11 @@
   ],
 
   "browser_action": {
-    "default_icon": "gmail.png",
-    "default_popup": "popup_index.html"
+    "default_icon": "gmail.png"
+  },
+
+  "background":{
+    "scripts": ["background.js"]
   },
 
   "permissions": [
