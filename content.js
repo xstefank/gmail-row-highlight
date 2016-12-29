@@ -1,11 +1,19 @@
 
+//constants
+const READ_EMAIL_CLASSMAME = "yO";
+const UNREAD_EMAIL_CLASSMAME = "zE";
+
 //default colors
-var defBgColor = null;
-var defColor = null;
+var defReadBgColor = null;
+var defReadColor = null;
+var defUnreadBgColor = null;
+var defUnreadColor = null;
 
 //user colors
-var userBgColor = "#A0A0A0";
-var userColor = "#E0E0E0";
+var userReadBgColor = "#A0A0A0";
+var userReadColor = "#E0E0E0";
+var userUnreadBgColor = "yellow";
+var userUnreadColor = "blue";
 
 //row change observer
 var tabindexObserver = new MutationSummary ({
@@ -18,13 +26,24 @@ function tabindexChangeHandler(trs) {
     tr.valueChanged.forEach(function(changeEl) {
         var currentValue = changeEl.getAttribute('tabindex');
 
+        var readEmail = hasClass(changeEl, READ_EMAIL_CLASSMAME);
+
         if (currentValue == 0) {
             //selected row
-            preserveDefaultColor(changeEl);
-            setRowColor(changeEl, userBgColor, userColor);
+            if (readEmail) {
+                preserveDefaultColor(changeEl, defReadBgColor, defReadColor);
+                setRowColor(changeEl, userReadBgColor, userReadColor);
+            } else {
+                preserveDefaultColor(changeEl, defUnreadBgColor, defUnreadColor);
+                setRowColor(changeEl, userUnreadBgColor, userUnreadColor);
+            }
         } else {
             //deselected row
-            setRowColor(changeEl, defBgColor, defColor);
+            if (readEmail) {
+                setRowColor(changeEl, defReadBgColor, defReadColor)
+            } else {
+                setRowColor(changeEl, defUnreadBgColor, defUnreadColor);
+            }
         }
     });
 }
@@ -32,11 +51,11 @@ function tabindexChangeHandler(trs) {
 /*
 saves the the default color values so they can be used when the row is deselected
  */
-function preserveDefaultColor(elem) {
-    if (defBgColor != null) return;
+function preserveDefaultColor(elem, bgColor, color) {
+    if (bgColor != null) return;
 
-    defBgColor = elem.style.backgroundColor;
-    defColor = elem.style.color;
+    bgColor = elem.style.backgroundColor;
+    color = elem.style.color;
 }
 
 /*
@@ -45,5 +64,12 @@ set the row colors
 function setRowColor(elem, bgCol, col) {
     elem.style.backgroundColor = bgCol;
     elem.style.color = col;
+}
+
+/*
+test if the elemnt contains a class
+ */
+function hasClass(elem, cls) {
+    return (' ' + elem.className + ' ').indexOf(' ' + cls + ' ') > -1;
 }
 
