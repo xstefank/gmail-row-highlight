@@ -10,10 +10,10 @@ var defUnreadBgColor = null;
 var defUnreadColor = null;
 
 //user colors
-var userReadBgColor = "#A0A0A0";
-var userReadColor = "#E0E0E0";
-var userUnreadBgColor = "yellow";
-var userUnreadColor = "blue";
+var userReadBgColor = "#858585";
+var userReadColor = "#4A4A4A";
+var userUnreadBgColor = "#A0A0A0";
+var userUnreadColor = "#E0E0E0";
 
 //row change observer
 var tabindexObserver = new MutationSummary ({
