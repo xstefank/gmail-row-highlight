@@ -2,18 +2,23 @@
 //constants
 const READ_EMAIL_CLASSMAME = "yO";
 const UNREAD_EMAIL_CLASSMAME = "zE";
+const SELECTED_EMAIL_CLASSNAME = "x7";
 
 //default colors
-var defReadBgColor = null;
 var defReadColor = null;
-var defUnreadBgColor = null;
+var defReadBgColor = null;
 var defUnreadColor = null;
+var defUnreadBgColor = null;
+var defSelectedColor = null;
+var defSelectedBgColor = null;
 
 //user colors
-var userReadBgColor = "#858585";
 var userReadColor = "#4A4A4A";
-var userUnreadBgColor = "#A0A0A0";
+var userReadBgColor = "#858585";
 var userUnreadColor = "#505050";
+var userUnreadBgColor = "#A0A0A0";
+var userSelectedColor = "blue";
+var userSelectedBgColor = "yellow";
 
 //color class
 class RowColor {
@@ -28,6 +33,7 @@ class RowColor {
 //row color objects
 var readRowColor = new RowColor(defReadColor, defReadBgColor, userReadColor, userReadBgColor);
 var unreadRowColor = new RowColor(defUnreadColor, defUnreadBgColor, userUnreadColor, userUnreadBgColor);
+var selectedRowColor = new RowColor(defSelectedColor, defSelectedBgColor, userSelectedColor, userSelectedBgColor);
 
 //row change observer
 var tabindexObserver = new MutationSummary ({
@@ -40,24 +46,31 @@ function tabindexChangeHandler(trs) {
     tr.valueChanged.forEach(function(changeEl) {
         var currentValue = changeEl.getAttribute('tabindex');
 
-        var isRead = hasClass(changeEl, READ_EMAIL_CLASSMAME);
+        var rowColor = pickRowColor(changeEl);
 
         if (currentValue == 0) {
-            if (isRead) {
-                preserveDefaultColor(changeEl, readRowColor.defColor, readRowColor.defBgColor);
-                setRowColor(changeEl, readRowColor.userColor, readRowColor.userBgColor);
-            } else {
-                preserveDefaultColor(changeEl, unreadRowColor.defColor, unreadRowColor.defBgColor);
-                setRowColor(changeEl, unreadRowColor.userColor, unreadRowColor.userBgColor);
-            }
+            preserveDefaultColor(changeEl, rowColor.defColor, rowColor.defBgColor);
+            setRowColor(changeEl, rowColor.userColor, rowColor.userBgColor);
         } else {
-            if (isRead) {
-                setRowColor(changeEl, readRowColor.defColor, readRowColor.defBgColor)
-            } else {
-                setRowColor(changeEl, unreadRowColor.defColor, unreadRowColor.defBgColor);
-            }
+            setRowColor(changeEl, rowColor.defColor, rowColor.defBgColor)
         }
     });
+}
+
+
+function pickRowColor(elem) {
+    var isRead = hasClass(elem, READ_EMAIL_CLASSMAME);
+    var isSelected = hasClass(elem, SELECTED_EMAIL_CLASSNAME);
+
+    if (isSelected) {
+        return selectedRowColor;
+    }
+
+    if (isRead) {
+        return readRowColor;
+    } else {
+        return unreadRowColor;
+    }
 }
 
 /*
