@@ -13,7 +13,21 @@ var defUnreadColor = null;
 var userReadBgColor = "#858585";
 var userReadColor = "#4A4A4A";
 var userUnreadBgColor = "#A0A0A0";
-var userUnreadColor = "#E0E0E0";
+var userUnreadColor = "#505050";
+
+//color class
+class RowColor {
+    constructor(defColor, defBgColor, userColor, userBgColor) {
+        this.defColor = defColor;
+        this.defBgColor = defBgColor;
+        this.userColor = userColor;
+        this.userBgColor = userBgColor;
+    }
+}
+
+//row color objects
+var readRowColor = new RowColor(defReadColor, defReadBgColor, userReadColor, userReadBgColor);
+var unreadRowColor = new RowColor(defUnreadColor, defUnreadBgColor, userUnreadColor, userUnreadBgColor);
 
 //row change observer
 var tabindexObserver = new MutationSummary ({
@@ -26,21 +40,21 @@ function tabindexChangeHandler(trs) {
     tr.valueChanged.forEach(function(changeEl) {
         var currentValue = changeEl.getAttribute('tabindex');
 
-        var readEmail = hasClass(changeEl, READ_EMAIL_CLASSMAME);
+        var isRead = hasClass(changeEl, READ_EMAIL_CLASSMAME);
 
         if (currentValue == 0) {
-            if (readEmail) {
-                preserveDefaultColor(changeEl, defReadColor, defReadBgColor);
-                setRowColor(changeEl, userReadColor, userReadBgColor);
+            if (isRead) {
+                preserveDefaultColor(changeEl, readRowColor.defColor, readRowColor.defBgColor);
+                setRowColor(changeEl, readRowColor.userColor, readRowColor.userBgColor);
             } else {
-                preserveDefaultColor(changeEl, defUnreadColor, defUnreadBgColor);
-                setRowColor(changeEl, userUnreadColor, userUnreadBgColor);
+                preserveDefaultColor(changeEl, unreadRowColor.defColor, unreadRowColor.defBgColor);
+                setRowColor(changeEl, unreadRowColor.userColor, unreadRowColor.userBgColor);
             }
         } else {
-            if (readEmail) {
-                setRowColor(changeEl, defReadColor, defReadBgColor)
+            if (isRead) {
+                setRowColor(changeEl, readRowColor.defColor, readRowColor.defBgColor)
             } else {
-                setRowColor(changeEl, defUnreadColor, defUnreadBgColor);
+                setRowColor(changeEl, unreadRowColor.defColor, unreadRowColor.defBgColor);
             }
         }
     });
