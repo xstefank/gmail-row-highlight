@@ -29,20 +29,18 @@ function tabindexChangeHandler(trs) {
         var readEmail = hasClass(changeEl, READ_EMAIL_CLASSMAME);
 
         if (currentValue == 0) {
-            //selected row
             if (readEmail) {
-                preserveDefaultColor(changeEl, defReadBgColor, defReadColor);
-                setRowColor(changeEl, userReadBgColor, userReadColor);
+                preserveDefaultColor(changeEl, defReadColor, defReadBgColor);
+                setRowColor(changeEl, userReadColor, userReadBgColor);
             } else {
-                preserveDefaultColor(changeEl, defUnreadBgColor, defUnreadColor);
-                setRowColor(changeEl, userUnreadBgColor, userUnreadColor);
+                preserveDefaultColor(changeEl, defUnreadColor, defUnreadBgColor);
+                setRowColor(changeEl, userUnreadColor, userUnreadBgColor);
             }
         } else {
-            //deselected row
             if (readEmail) {
-                setRowColor(changeEl, defReadBgColor, defReadColor)
+                setRowColor(changeEl, defReadColor, defReadBgColor)
             } else {
-                setRowColor(changeEl, defUnreadBgColor, defUnreadColor);
+                setRowColor(changeEl, defUnreadColor, defUnreadBgColor);
             }
         }
     });
@@ -51,25 +49,25 @@ function tabindexChangeHandler(trs) {
 /*
 saves the the default color values so they can be used when the row is deselected
  */
-function preserveDefaultColor(elem, bgColor, color) {
+function preserveDefaultColor(elem, color, bgColor) {
     if (bgColor != null) return;
 
-    bgColor = elem.style.backgroundColor;
     color = elem.style.color;
+    bgColor = elem.style.backgroundColor;
 }
 
 /*
 set the row colors
  */
-function setRowColor(elem, bgCol, col) {
-    elem.style.backgroundColor = bgCol;
-    elem.style.color = col;
+function setRowColor(elem, color, bgColor) {
+    elem.style.color = color;
+    elem.style.backgroundColor = bgColor;
 }
 
 /*
 test if the elemnt contains a class
  */
-function hasClass(elem, cls) {
-    return (' ' + elem.className + ' ').indexOf(' ' + cls + ' ') > -1;
+function hasClass(elem, clazz) {
+    return (' ' + elem.className + ' ').indexOf(' ' + clazz + ' ') > -1;
 }
 
