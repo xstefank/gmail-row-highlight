@@ -84,8 +84,11 @@ function pickRowColor(elem) {
     }
 }
 
-/*
-saves the the default color values so they can be used when the row is deselected
+/**
+ * saves the the default color values so they can be used when the row is deselected
+ * @param elem row element
+ * @param color main color
+ * @param bgColor background color
  */
 function preserveDefaultColor(elem, color, bgColor) {
     if (bgColor != null) return;
@@ -94,16 +97,22 @@ function preserveDefaultColor(elem, color, bgColor) {
     bgColor = elem.style.backgroundColor;
 }
 
-/*
-set the row colors
+/**
+ * set the row colors
+ * @param elem row element
+ * @param color main color
+ * @param bgColor background color
  */
 function setRowColor(elem, color, bgColor) {
     elem.style.color = color;
     elem.style.backgroundColor = bgColor;
 }
 
-/*
-test if the elemnt contains a class
+/**
+ * test if the elemnt contains a CSS class
+ * @param elem element
+ * @param clazz name of the CSS class
+ * @returns whether the element contains the CSS class
  */
 function hasClass(elem, clazz) {
     return (' ' + elem.className + ' ').indexOf(' ' + clazz + ' ') > -1;
