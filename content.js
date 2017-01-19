@@ -41,6 +41,17 @@ var tabindexObserver = new MutationSummary ({
     queries: [{ attribute: 'tabindex' }]
 });
 
+var selectObserver = new MutationSummary ({
+    callback: selectHandler,
+    queries: [{ element: '.' + SELECTED_EMAIL_CLASSNAME }]
+});
+
+function selectHandler(trs) {
+    var tr = trs[0];
+    tr.added.forEach(setRowColorFromElem);
+    tr.removed.forEach(setRowColorFromElem);
+}
+
 function tabindexChangeHandler(trs) {
     var tr = trs[0];
     tr.valueChanged.forEach(function(changeEl) {
@@ -98,3 +109,11 @@ function hasClass(elem, clazz) {
     return (' ' + elem.className + ' ').indexOf(' ' + clazz + ' ') > -1;
 }
 
+/**
+ * picks the right colors and sets the row color
+ * @param elem row element
+ */
+function setRowColorFromElem(elem) {
+    var rowColor = pickRowColor(elem);
+    setRowColor(elem, rowColor.userColor, rowColor.userBgColor);
+}
