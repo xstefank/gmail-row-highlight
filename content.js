@@ -3,6 +3,7 @@
 const READ_EMAIL_CLASSMAME = "yO";
 const UNREAD_EMAIL_CLASSMAME = "zE";
 const SELECTED_EMAIL_CLASSNAME = "x7";
+const INBOX_ROW_CLASS = "zA";
 
 //default colors
 var defReadColor = null;
@@ -38,7 +39,8 @@ var selectedRowColor = new RowColor(defSelectedColor, defSelectedBgColor, userSe
 //row change observer
 var tabindexObserver = new MutationSummary ({
     callback: tabindexChangeHandler,
-    queries: [{ attribute: 'tabindex' }]
+    queries: [{ element: '.' + INBOX_ROW_CLASS,
+                elementAttributes: 'tabindex' }]
 });
 
 var selectObserver = new MutationSummary ({
@@ -54,7 +56,7 @@ function selectHandler(trs) {
 
 function tabindexChangeHandler(trs) {
     var tr = trs[0];
-    tr.valueChanged.forEach(function(changeEl) {
+    tr.attributeChanged['tabindex'].forEach(function(changeEl) {
         var currentValue = changeEl.getAttribute('tabindex');
 
         var rowColor = pickRowColor(changeEl);
