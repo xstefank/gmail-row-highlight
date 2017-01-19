@@ -50,8 +50,8 @@ var selectObserver = new MutationSummary ({
 
 function selectHandler(trs) {
     var tr = trs[0];
-    tr.added.forEach(setRowColorFromElem);
-    tr.removed.forEach(setRowColorFromElem);
+    tr.added.forEach(setRowColorFromElemIfSelected);
+    tr.removed.forEach(setRowColorFromElemIfSelected);
 }
 
 function tabindexChangeHandler(trs) {
@@ -127,4 +127,14 @@ function hasClass(elem, clazz) {
 function setRowColorFromElem(elem) {
     var rowColor = pickRowColor(elem);
     setRowColor(elem, rowColor.userColor, rowColor.userBgColor);
+}
+
+/**
+ * set the color row if selected
+ * @param elem row element
+ */
+function setRowColorFromElemIfSelected(elem) {
+    if (elem.getAttribute('tabindex') == 0) {
+        setRowColorFromElem(elem);
+    }
 }
