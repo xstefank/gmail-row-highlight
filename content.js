@@ -18,8 +18,8 @@ var userReadColor = "#4A4A4A";
 var userReadBgColor = "#858585";
 var userUnreadColor = "#505050";
 var userUnreadBgColor = "#A0A0A0";
-var userSelectedColor = "blue";
-var userSelectedBgColor = "yellow";
+var userSelectedColor = "#333A36";
+var userSelectedBgColor = "#62E544";
 
 //color class
 class RowColor {
