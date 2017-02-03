@@ -20,7 +20,8 @@
   },
 
   "permissions": [
-    "*://*.google.com/*"
+    "*://*.google.com/*",
+    "storage"
   ],
 
   "web_accessible_resources": [

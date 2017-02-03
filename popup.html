@@ -1,35 +1,16 @@
-<!--<html>-->
-<!--<head>-->
-    <!--&lt;!&ndash;<meta http-equiv="Content-Security-Policy" content="script-src 'sha254-jt9X5K0qG6NpRVeycYK1yRJq7zinpbuMf8IYY8/Wi8M='">&ndash;&gt;-->
-<!--</head>-->
-<!--<body style="width: 500px; height: 300px">-->
-
-
-<!--<button id="test">Test!!!</button>-->
-<!--<script>-->
-    <!--alert("hello there!");-->
-<!--</script>-->
-
-
-<!--&lt;!&ndash;<input id="colorIn" value="666666" class="jscolor {width:243, height:150, position:'right',&ndash;&gt;-->
-    <!--&lt;!&ndash;borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}" style="width: 50px">&ndash;&gt;-->
-
-<!--&lt;!&ndash;<script type="text/javascript" src="popup.js"></script>&ndash;&gt;-->
-<!--&lt;!&ndash;<script src="jscolor.js"></script>&ndash;&gt;-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html>
-<head></head>
+<head>
+    <script src="popup.js"></script>
+    <script src='jscolor.js'></script>
+</head>
 <body style="width: 500px; height: 300px">
 <button id="test">Test!!!</button>
 
-<input value="ffcc00" class="jscolor {width:243, height:150, position:'right',
-    borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666', onFineChange:'update(this)'}">
+<input id="userReadColor" class="jscolor {width:170, height:100, position:'down',
+    borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666', onFineChange: 'updateUserReadColor(this)'}">
 
-<script src="popup.js"></script>
-<script src="jscolor.js"></script>
-<!--<script>function sayHello() {alert("hello asdfasdf");} document.getElementById("test").addEventListener("click", sayHello);</script>-->
+
+
 </body>
 </html>

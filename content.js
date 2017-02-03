@@ -21,6 +21,8 @@ var userUnreadBgColor = "#A0A0A0";
 var userSelectedColor = "#333A36";
 var userSelectedBgColor = "#62E544";
 
+var currentRowElement = null;
+
 //color class
 class RowColor {
     constructor(defColor, defBgColor, userColor, userBgColor) {
@@ -32,15 +34,15 @@ class RowColor {
 }
 
 //row color objects
-var readRowColor = new RowColor(defReadColor, defReadBgColor, userReadColor, userReadBgColor);
-var unreadRowColor = new RowColor(defUnreadColor, defUnreadBgColor, userUnreadColor, userUnreadBgColor);
-var selectedRowColor = new RowColor(defSelectedColor, defSelectedBgColor, userSelectedColor, userSelectedBgColor);
+readRowColor = new RowColor(defReadColor, defReadBgColor, userReadColor, userReadBgColor);
+unreadRowColor = new RowColor(defUnreadColor, defUnreadBgColor, userUnreadColor, userUnreadBgColor);
+selectedRowColor = new RowColor(defSelectedColor, defSelectedBgColor, userSelectedColor, userSelectedBgColor);
 
 //row change observer
 var tabindexObserver = new MutationSummary ({
     callback: tabindexChangeHandler,
     queries: [{ element: '.' + INBOX_ROW_CLASS,
-                elementAttributes: 'tabindex' }]
+        elementAttributes: 'tabindex' }]
 });
 
 var selectObserver = new MutationSummary ({
@@ -64,6 +66,7 @@ function tabindexChangeHandler(trs) {
         if (currentValue == 0) {
             preserveDefaultColor(changeEl, rowColor.defColor, rowColor.defBgColor);
             setRowColor(changeEl, rowColor.userColor, rowColor.userBgColor);
+            currentRowElement = changeEl;
         } else {
             setRowColor(changeEl, rowColor.defColor, rowColor.defBgColor)
         }
@@ -141,10 +144,33 @@ function setRowColorFromElemIfSelected(elem) {
 
 //setters for colors
 function setUserReadColor(color) {
-    // userReadColor = color;
-    alert(color);
+    readRowColor.userColor = "#" + color;
+    console.log("setting userRead color to " + readRowColor.userColor);
 }
 
 function setUserReadBgColor(color) {
     userReadBgColor = color;
 }
+
+//initial request for values
+
+//dynamic setting of different colors
+chrome.extension.onMessage.addListener(function(message,sender,sendResponse){
+    readRowColor.userColor = message.userReadColor;
+    reloadCurrentRow();
+});
+
+function reloadCurrentRow() {
+    var currentValue = 0;
+    var rowColor = pickRowColor(currentRowElement);
+
+    if (currentValue == 0) {
+        preserveDefaultColor(currentRowElement, rowColor.defColor, rowColor.defBgColor);
+        setRowColor(currentRowElement, rowColor.userColor, rowColor.userBgColor);
+        currentRowElement = currentRowElement;
+    } else {
+        setRowColor(currentRowElement, rowColor.defColor, rowColor.defBgColor)
+    }
+}
+
+
