@@ -12,6 +12,8 @@
     }
   ],
 
+  "content_security_policy": "script-src 'unsafe-eval' 'sha512-ntVpZa8HMJ0Z3kzI7F7KkG5rI+9Hbh1ToZUtc9FyRioi5RAqwsInE7AjBinDvQ6SDF7DuMpZb44uhLZUYVGUBg=='; object-src 'self'",
+
   "browser_action": {
     "default_icon": "gmail.png",
     "default_popup": "popup.html"

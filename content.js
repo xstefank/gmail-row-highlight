@@ -138,3 +138,13 @@ function setRowColorFromElemIfSelected(elem) {
         setRowColorFromElem(elem);
     }
 }
+
+//setters for colors
+function setUserReadColor(color) {
+    // userReadColor = color;
+    alert(color);
+}
+
+function setUserReadBgColor(color) {
+    userReadBgColor = color;
+}
