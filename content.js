@@ -152,15 +152,15 @@ function setUserReadBgColor(color) {
     userReadBgColor = color;
 }
 
-//initial request for values
-chrome.runtime.sendMessage({
-    action: "init",
-    userReadColor: "sdfasdf"
-});
+//initial request for values TODO
+// chrome.runtime.sendMessage({
+//     action: "init",
+//     userReadColor: "sdfasdf"
+// });
 
 //dynamic setting of different colors
-chrome.extension.onMessage.addListener(function(message,sender,sendResponse){
-    readRowColor.userColor = message.userReadColor;
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+    readRowColor.userColor = request.userReadColor;
     reloadCurrentRow();
 });
 
