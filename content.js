@@ -152,16 +152,18 @@ function setUserReadBgColor(color) {
     userReadBgColor = color;
 }
 
-//initial request for values TODO
-// chrome.runtime.sendMessage({
-//     action: "init",
-//     userReadColor: "sdfasdf"
+//initial request for the color information from background local storage
+// chrome.tabs.executeScript(tab.id, {file: 'background.js'}, function() {
+//     console.log('Successfully injected script into the page');
 // });
 
 //dynamic setting of different colors
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
     readRowColor.userColor = request.userReadColor;
-    reloadCurrentRow();
+
+    if (request.type == "update") {
+        reloadCurrentRow();
+    }
 });
 
 function reloadCurrentRow() {
