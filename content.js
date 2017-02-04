@@ -154,17 +154,19 @@ function setUserReadBgColor(color) {
 }
 
 //initial request for the color information from background local storage
-// chrome.tabs.executeScript(tab.id, {file: 'background.js'}, function() {
-//     console.log('Successfully injected script into the page');
-// });
+chrome.runtime.sendMessage({
+    from: "content",
+    type: "init"
+}, function (response) {
+    console.log("init msg", response);
+    readRowColor = new RowColor(defReadColor, defReadBgColor, response.userReadColor, userReadBgColor);
+});
+
 
 //dynamic setting of different colors
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.from == "background") {
-        if (request.type == "init") {
-            console.log("init msg", request);
-            readRowColor = new RowColor(defReadColor, defReadBgColor, request.userReadColor, userReadBgColor);
-        } else if (request.type == "update") {
+        if (request.type == "update") {
             console.log("update msg", request);
             readRowColor.userColor = request.userReadColor;
             reloadCurrentRow();
