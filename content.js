@@ -1,4 +1,3 @@
-
 //constants
 const READ_EMAIL_CLASSMAME = "yO";
 const UNREAD_EMAIL_CLASSMAME = "zE";
@@ -39,15 +38,17 @@ unreadRowColor = new RowColor(defUnreadColor, defUnreadBgColor, userUnreadColor,
 selectedRowColor = new RowColor(defSelectedColor, defSelectedBgColor, userSelectedColor, userSelectedBgColor);
 
 //row change observer
-var tabindexObserver = new MutationSummary ({
+var tabindexObserver = new MutationSummary({
     callback: tabindexChangeHandler,
-    queries: [{ element: '.' + INBOX_ROW_CLASS,
-        elementAttributes: 'tabindex' }]
+    queries: [{
+        element: '.' + INBOX_ROW_CLASS,
+        elementAttributes: 'tabindex'
+    }]
 });
 
-var selectObserver = new MutationSummary ({
+var selectObserver = new MutationSummary({
     callback: selectHandler,
-    queries: [{ element: '.' + SELECTED_EMAIL_CLASSNAME }]
+    queries: [{element: '.' + SELECTED_EMAIL_CLASSNAME}]
 });
 
 function selectHandler(trs) {
@@ -58,7 +59,7 @@ function selectHandler(trs) {
 
 function tabindexChangeHandler(trs) {
     var tr = trs[0];
-    tr.attributeChanged['tabindex'].forEach(function(changeEl) {
+    tr.attributeChanged['tabindex'].forEach(function (changeEl) {
         var currentValue = changeEl.getAttribute('tabindex');
 
         var rowColor = pickRowColor(changeEl);
@@ -158,12 +159,20 @@ function setUserReadBgColor(color) {
 // });
 
 //dynamic setting of different colors
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
-    readRowColor.userColor = request.userReadColor;
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.from == "background") {
+        if (request.type == "init") {
+            console.log("init msg", request);
+            readRowColor = new RowColor(defReadColor, defReadBgColor, request.userReadColor, userReadBgColor);
+        } else if (request.type == "update") {
+            console.log("update msg", request);
+            readRowColor.userColor = request.userReadColor;
+            reloadCurrentRow();
+        }
 
-    if (request.type == "update") {
-        reloadCurrentRow();
     }
+
+
 });
 
 function reloadCurrentRow() {
@@ -178,5 +187,4 @@ function reloadCurrentRow() {
         setRowColor(currentRowElement, rowColor.defColor, rowColor.defBgColor)
     }
 }
-
 

@@ -13,15 +13,16 @@ chrome.runtime.onInstalled.addListener(function () {
     }
 
     //send init information to the content script
-    var initMessage = {
-        from: "background",
-        type: "init",
-        userReadColor: localStorage.userReadColor,
-    };
-
-    //wait till tab is completely loaded
     chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+        //wait till tab is completely loaded
+        // note that this is called after each inbox load
         if (changeInfo.status == 'complete') {
+            initMessage = {
+                from: "background",
+                 type: "init",
+                userReadColor: localStorage.userReadColor,
+            };
+
             chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
                 chrome.tabs.sendMessage(tabs[0].id, initMessage, function(response) {});
             });
