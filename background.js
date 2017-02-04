@@ -1,4 +1,4 @@
-var userReadColor = "#4A4A4A";
+const userReadColor = "#4A4A4A";
 
 var ColorTypes = {
     userRead: "userReadColor",
@@ -7,7 +7,6 @@ var ColorTypes = {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.from == "content" && request.type == "init") {
-        console.log("init");
         //initialization
         if (localStorage.userReadColor == undefined) {
             localStorage.userReadColor = userReadColor;
@@ -40,7 +39,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             });
         });
     }
-
 });
 
 

@@ -4,23 +4,23 @@ const UNREAD_EMAIL_CLASSMAME = "zE";
 const SELECTED_EMAIL_CLASSNAME = "x7";
 const INBOX_ROW_CLASS = "zA";
 
-//default colors
-var defReadColor = null;
-var defReadBgColor = null;
-var defUnreadColor = null;
-var defUnreadBgColor = null;
-var defSelectedColor = null;
-var defSelectedBgColor = null;
-
 //user colors
-var userReadColor = "#4A4A4A";
-var userReadBgColor = "#858585";
-var userUnreadColor = "#505050";
-var userUnreadBgColor = "#A0A0A0";
-var userSelectedColor = "#333A36";
-var userSelectedBgColor = "#62E544";
+const userReadColor = "#4A4A4A";
+const userReadBgColor = "#858585";
+const userUnreadColor = "#505050";
+const userUnreadBgColor = "#A0A0A0";
+const userSelectedColor = "#333A36";
+const userSelectedBgColor = "#62E544";
 
-var currentRowElement = null;
+//default colors
+let defReadColor = null;
+let defReadBgColor = null;
+let defUnreadColor = null;
+let defUnreadBgColor = null;
+let defSelectedColor = null;
+let defSelectedBgColor = null;
+
+let currentRowElement = null;
 
 //color class
 class RowColor {
@@ -33,12 +33,12 @@ class RowColor {
 }
 
 //row color objects
-readRowColor = new RowColor(defReadColor, defReadBgColor, userReadColor, userReadBgColor);
-unreadRowColor = new RowColor(defUnreadColor, defUnreadBgColor, userUnreadColor, userUnreadBgColor);
-selectedRowColor = new RowColor(defSelectedColor, defSelectedBgColor, userSelectedColor, userSelectedBgColor);
+let readRowColor = null;
+let unreadRowColor = new RowColor(defUnreadColor, defUnreadBgColor, userUnreadColor, userUnreadBgColor);
+let selectedRowColor = new RowColor(defSelectedColor, defSelectedBgColor, userSelectedColor, userSelectedBgColor);
 
 //row change observer
-var tabindexObserver = new MutationSummary({
+const tabindexObserver = new MutationSummary({
     callback: tabindexChangeHandler,
     queries: [{
         element: '.' + INBOX_ROW_CLASS,
@@ -46,44 +46,54 @@ var tabindexObserver = new MutationSummary({
     }]
 });
 
-var selectObserver = new MutationSummary({
+//selection observer
+const selectObserver = new MutationSummary({
     callback: selectHandler,
     queries: [{element: '.' + SELECTED_EMAIL_CLASSNAME}]
 });
 
 function selectHandler(trs) {
-    var tr = trs[0];
-    tr.added.forEach(setRowColorFromElemIfSelected);
-    tr.removed.forEach(setRowColorFromElemIfSelected);
+    const tr = trs[0];
+    tr.added.forEach(assignRowColorFromElemIfSelected);
+    tr.removed.forEach(assignRowColorFromElemIfSelected);
 }
 
 function tabindexChangeHandler(trs) {
-    var tr = trs[0];
+    const tr = trs[0];
     tr.attributeChanged['tabindex'].forEach(function (changeEl) {
-        var currentValue = changeEl.getAttribute('tabindex');
-
-        var rowColor = pickRowColor(changeEl);
-
-        if (currentValue == 0) {
-            preserveDefaultColor(changeEl, rowColor.defColor, rowColor.defBgColor);
-            setRowColor(changeEl, rowColor.userColor, rowColor.userBgColor);
-            currentRowElement = changeEl;
-        } else {
-            setRowColor(changeEl, rowColor.defColor, rowColor.defBgColor)
-        }
+        setRowColor(changeEl);
     });
 }
 
+/**
+ * sets the current row element color by its attributes
+ * @param elem the element which is being changed
+ */
+function setRowColor(elem) {
+    const currentValue = elem.getAttribute("tabindex");
+    const rowColor = pickRowColor(elem);
 
+    if (currentValue == 0) {
+        preserveDefaultColor(elem, rowColor);
+        assignRowColor(elem, rowColor.userColor, rowColor.userBgColor);
+        currentRowElement = elem;
+    } else {
+        assignRowColor(elem, rowColor.defColor, rowColor.defBgColor)
+    }
+}
+
+/**
+ * picks the color of the element by its classnames
+ * @param elem the element being checked
+ * @returns RowColor of the element
+ */
 function pickRowColor(elem) {
-    var isRead = hasClass(elem, READ_EMAIL_CLASSMAME);
-    var isSelected = hasClass(elem, SELECTED_EMAIL_CLASSNAME);
+    const isRead = hasClass(elem, READ_EMAIL_CLASSMAME);
+    const isSelected = hasClass(elem, SELECTED_EMAIL_CLASSNAME);
 
     if (isSelected) {
         return selectedRowColor;
-    }
-
-    if (isRead) {
+    } else if (isRead) {
         return readRowColor;
     } else {
         return unreadRowColor;
@@ -93,32 +103,31 @@ function pickRowColor(elem) {
 /**
  * saves the the default color values so they can be used when the row is deselected
  * @param elem row element
- * @param color main color
- * @param bgColor background color
+ * @param rowColor the color class to be set up
  */
-function preserveDefaultColor(elem, color, bgColor) {
-    if (bgColor != null) return;
+function preserveDefaultColor(elem, rowColor) {
+    if (rowColor.defBgColor != null) return;
 
-    color = elem.style.color;
-    bgColor = elem.style.backgroundColor;
+    rowColor.defColor = elem.style.color;
+    rowColor.defBgColor = elem.style.backgroundColor;
 }
 
 /**
- * set the row colors
+ * assign the row colors
  * @param elem row element
  * @param color main color
  * @param bgColor background color
  */
-function setRowColor(elem, color, bgColor) {
+function assignRowColor(elem, color, bgColor) {
     elem.style.color = color;
     elem.style.backgroundColor = bgColor;
 }
 
 /**
- * test if the elemnt contains a CSS class
+ * tests if the element contains a CSS class
  * @param elem element
  * @param clazz name of the CSS class
- * @returns whether the element contains the CSS class
+ * @returns boolean whether the element contains the CSS class
  */
 function hasClass(elem, clazz) {
     return (' ' + elem.className + ' ').indexOf(' ' + clazz + ' ') > -1;
@@ -128,65 +137,42 @@ function hasClass(elem, clazz) {
  * picks the right colors and sets the row color
  * @param elem row element
  */
-function setRowColorFromElem(elem) {
-    var rowColor = pickRowColor(elem);
-    setRowColor(elem, rowColor.userColor, rowColor.userBgColor);
+function assignRowColorFromElem(elem) {
+    const rowColor = pickRowColor(elem);
+    assignRowColor(elem, rowColor.userColor, rowColor.userBgColor);
 }
 
 /**
  * set the color row if selected
  * @param elem row element
  */
-function setRowColorFromElemIfSelected(elem) {
+function assignRowColorFromElemIfSelected(elem) {
     if (elem.getAttribute('tabindex') == 0) {
-        setRowColorFromElem(elem);
+        assignRowColorFromElem(elem);
     }
 }
 
-//setters for colors
-function setUserReadColor(color) {
-    readRowColor.userColor = "#" + color;
-    console.log("setting userRead color to " + readRowColor.userColor);
+/**
+ * reloads the current row element
+ */
+function reloadCurrentRow() {
+    setRowColor(currentRowElement);
 }
 
-function setUserReadBgColor(color) {
-    userReadBgColor = color;
-}
-
+/**---- colors transitions and controls ----**/
 //initial request for the color information from background local storage
 chrome.runtime.sendMessage({
     from: "content",
     type: "init"
 }, function (response) {
-    console.log("init msg", response);
     readRowColor = new RowColor(defReadColor, defReadBgColor, response.userReadColor, userReadBgColor);
 });
 
-
-//dynamic setting of different colors
+//dynamic setting of different colors to the current row
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.from == "background") {
-        if (request.type == "update") {
-            console.log("update msg", request);
-            readRowColor.userColor = request.userReadColor;
-            reloadCurrentRow();
-        }
-
+    if (request.from == "background" && request.type == "update") {
+        readRowColor.userColor = request.userReadColor;
+        reloadCurrentRow();
     }
-
-
 });
-
-function reloadCurrentRow() {
-    var currentValue = 0;
-    var rowColor = pickRowColor(currentRowElement);
-
-    if (currentValue == 0) {
-        preserveDefaultColor(currentRowElement, rowColor.defColor, rowColor.defBgColor);
-        setRowColor(currentRowElement, rowColor.userColor, rowColor.userBgColor);
-        currentRowElement = currentRowElement;
-    } else {
-        setRowColor(currentRowElement, rowColor.defColor, rowColor.defBgColor)
-    }
-}
 
