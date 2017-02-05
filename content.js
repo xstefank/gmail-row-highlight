@@ -4,9 +4,6 @@ const UNREAD_EMAIL_CLASSMAME = "zE";
 const SELECTED_EMAIL_CLASSNAME = "x7";
 const INBOX_ROW_CLASS = "zA";
 
-//user colors
-const userReadColor = "#4A4A4A";
-const userReadBgColor = "#858585";
 const userUnreadColor = "#505050";
 const userUnreadBgColor = "#A0A0A0";
 const userSelectedColor = "#333A36";
@@ -165,13 +162,14 @@ chrome.runtime.sendMessage({
     from: "content",
     type: "init"
 }, function (response) {
-    readRowColor = new RowColor(defReadColor, defReadBgColor, response.userReadColor, userReadBgColor);
+    readRowColor = new RowColor(defReadColor, defReadBgColor, response.userReadColor, response.userReadBgColor);
 });
 
 //dynamic setting of different colors to the current row
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.from == "background" && request.type == "update") {
         readRowColor.userColor = request.userReadColor;
+        readRowColor.userBgColor = request.userReadBgColor;
         reloadCurrentRow();
     }
 });
