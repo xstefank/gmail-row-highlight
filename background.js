@@ -2,11 +2,15 @@
 //user colors
 const userReadColor = "#4A4A4A";
 const userReadBgColor = "#858585";
+const userUnreadColor = "#505050";
+const userUnreadBgColor = "#A0A0A0";
 
 
 var ColorTypes = {
     userRead: "userReadColor",
-    userReadBg: "userReadBgColor"
+    userReadBg: "userReadBgColor",
+    userUnread: "userUnreadColor",
+    userUnreadBg: "userUnreadBgColor"
 };
 
 //initialization
@@ -20,7 +24,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             from: "background",
             type: "init",
             userReadColor: localStorage.userReadColor,
-            userReadBgColor: localStorage.userReadBgColor
+            userReadBgColor: localStorage.userReadBgColor,
+            userUnreadColor: localStorage.userUnreadColor,
+            userUnreadBgColor: localStorage.userUnreadBgColor
         };
 
         sendResponse(initMessage);
@@ -33,6 +39,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             case ColorTypes.userReadBg:
                 localStorage.userReadBgColor = request.value;
                 break;
+            case ColorTypes.userUnread:
+                localStorage.userUnreadColor = request.value;
+                break;
+            case ColorTypes.userUnreadBg:
+                localStorage.userUnreadBgColor = request.value;
         }
 
         //send the gathered information to the content script
@@ -40,7 +51,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             from: "background",
             type: "update",
             userReadColor: localStorage.userReadColor,
-            userReadBgColor: localStorage.userReadBgColor
+            userReadBgColor: localStorage.userReadBgColor,
+            userUnreadColor: localStorage.userUnreadColor,
+            userUnreadBgColor: localStorage.userUnreadBgColor
         };
 
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -58,8 +71,18 @@ function initStorageProperties() {
     if (localStorage.userReadBgColor == undefined) {
         localStorage.userReadBgColor = userReadBgColor;
     }
+
+    if (localStorage.userUnreadColor == undefined) {
+        localStorage.userUnreadColor = userUnreadColor;
+    }
+
+    if (localStorage.userUnreadBgColor == undefined) {
+        localStorage.userUnreadBgColor = userUnreadBgColor;
+    }
 }
 function resetColors() {
     localStorage.userReadColor = userReadColor;
     localStorage.userReadBgColor = userReadBgColor;
+    localStorage.userUnreadColor = userUnreadColor;
+    localStorage.userUnreadBgColor = userUnreadBgColor;
 }
