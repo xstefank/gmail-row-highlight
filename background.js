@@ -4,13 +4,18 @@ const userReadColor = "#4A4A4A";
 const userReadBgColor = "#858585";
 const userUnreadColor = "#505050";
 const userUnreadBgColor = "#A0A0A0";
+const userSelectedColor = "#333A36";
+const userSelectedBgColor = "#62E544";
+
 
 
 var ColorTypes = {
     userRead: "userReadColor",
     userReadBg: "userReadBgColor",
     userUnread: "userUnreadColor",
-    userUnreadBg: "userUnreadBgColor"
+    userUnreadBg: "userUnreadBgColor",
+    userSelected: "userSelectedColor",
+    userSelectedBg: "userSelectedBgColor"
 };
 
 //initialization
@@ -26,7 +31,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             userReadColor: localStorage.userReadColor,
             userReadBgColor: localStorage.userReadBgColor,
             userUnreadColor: localStorage.userUnreadColor,
-            userUnreadBgColor: localStorage.userUnreadBgColor
+            userUnreadBgColor: localStorage.userUnreadBgColor,
+            userSelectedColor: localStorage.userSelectedColor,
+            userSelectedBgColor: localStorage.userSelectedBgColor
         };
 
         sendResponse(initMessage);
@@ -44,6 +51,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 break;
             case ColorTypes.userUnreadBg:
                 localStorage.userUnreadBgColor = request.value;
+                break;
+            case ColorTypes.userSelected:
+                localStorage.userSelectedColor = request.value;
+                break;
+            case ColorTypes.userSelectedBg:
+                localStorage.userSelectedBgColor = request.value;
+                break;
+            default:
+                throw "Undefined color type: " + request.colorType;
         }
 
         //send the gathered information to the content script
@@ -53,7 +69,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             userReadColor: localStorage.userReadColor,
             userReadBgColor: localStorage.userReadBgColor,
             userUnreadColor: localStorage.userUnreadColor,
-            userUnreadBgColor: localStorage.userUnreadBgColor
+            userUnreadBgColor: localStorage.userUnreadBgColor,
+            userSelectedColor: localStorage.userSelectedColor,
+            userSelectedBgColor: localStorage.userSelectedBgColor
         };
 
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -79,10 +97,20 @@ function initStorageProperties() {
     if (localStorage.userUnreadBgColor == undefined) {
         localStorage.userUnreadBgColor = userUnreadBgColor;
     }
+
+    if (localStorage.userSelectedColor == undefined) {
+        localStorage.userSelectedColor = userSelectedColor;
+    }
+
+    if (localStorage.userSelectedBgColor == undefined) {
+        localStorage.userSelectedBgColor = userSelectedBgColor;
+    }
 }
 function resetColors() {
     localStorage.userReadColor = userReadColor;
     localStorage.userReadBgColor = userReadBgColor;
     localStorage.userUnreadColor = userUnreadColor;
     localStorage.userUnreadBgColor = userUnreadBgColor;
+    localStorage.userSelectedColor = userSelectedColor;
+    localStorage.userSelectedBgColor = userSelectedBgColor;
 }

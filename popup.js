@@ -10,6 +10,8 @@ chrome.runtime.getBackgroundPage(function(bg) {
     document.getElementById("userReadBgColorInput").jscolor.fromString(bg.localStorage.userReadBgColor);
     document.getElementById("userUnreadColorInput").jscolor.fromString(bg.localStorage.userUnreadColor);
     document.getElementById("userUnreadBgColorInput").jscolor.fromString(bg.localStorage.userUnreadBgColor);
+    document.getElementById("userSelectedColorInput").jscolor.fromString(bg.localStorage.userSelectedColor);
+    document.getElementById("userSelectedBgColorInput").jscolor.fromString(bg.localStorage.userSelectedBgColor);
 });
 
 //update functions
@@ -49,6 +51,26 @@ function updateUserUnreadBgColor(jscolor) {
     chrome.runtime.sendMessage({
         from: "popup",
         colorType: ColorTypes.userUnreadBg,
+        value: color
+    });
+}
+
+function updateUserSelectedColor(jscolor) {
+    let color = '#' + jscolor;
+
+    chrome.runtime.sendMessage({
+        from: "popup",
+        colorType: ColorTypes.userSelected,
+        value: color
+    });
+}
+
+function updateUserSelectedBgColor(jscolor) {
+    let color = '#' + jscolor;
+
+    chrome.runtime.sendMessage({
+        from: "popup",
+        colorType: ColorTypes.userSelectedBg,
         value: color
     });
 }
