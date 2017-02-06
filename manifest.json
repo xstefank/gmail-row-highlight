@@ -36,10 +36,7 @@
     "default_popup": "popup.html"
   },
 
-  //TODO
   "permissions": [
-    "*://*.google.com/*",
-    "tabs"
   ],
 
   "web_accessible_resources": [
