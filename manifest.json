@@ -1,9 +1,15 @@
 {
   "manifest_version": 2,
 
-  "name": "Gmail row highlighter",
+  "name": "Gmail Row Highlighter",
   "description": "This extension is highlighting gmail rows.",
   "version": "1.1",
+
+  "icons": {
+    "16": "images/gmail16.png",
+    "48": "images/gmail48.png",
+    "128": "images/gmail128.png"
+  },
 
   "content_scripts": [
     {
@@ -21,17 +27,29 @@
   },
 
   "browser_action": {
-    "default_title": "Gmail row highlighter",
-    "default_icon": "images/gmail.png",
+    "default_title": "Gmail Row Highlighter",
+    "default_icon": {
+      "16": "images/gmail16.png",
+      "48": "images/gmail48.png",
+      "128": "images/gmail128.png"
+    },
     "default_popup": "popup.html"
   },
 
+  //TODO
   "permissions": [
     "*://*.google.com/*",
     "tabs"
   ],
 
   "web_accessible_resources": [
-  ]
+  ],
+
+  "homepage_url": "https://github.com/xstefank/gmail-row-highlight",
+
+  "options_ui": {
+    "page": "popup.html",
+    "chrome_style": true
+  }
 
 }

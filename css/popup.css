@@ -1,9 +1,12 @@
 body {
-    width: 180px;
-    height: 390px;
+    width:100%;
+    min-width: 220px;
+    margin-left:auto;
+    margin-right:auto;
+    height: 100%;
     background-color: black;
     color: white;
-    text-align: center
+    text-align: center;
 }
 
 .colorLabel {
@@ -17,7 +20,7 @@ body {
     width: 172px;
     height: 20px;
     text-align: center;
-    align:right
+    align:center
 }
 
 #popupFooter {
