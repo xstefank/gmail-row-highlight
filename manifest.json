@@ -22,7 +22,7 @@
 
   "browser_action": {
     "default_title": "Gmail row highlighter",
-    "default_icon": "gmail.png",
+    "default_icon": "images/gmail.png",
     "default_popup": "popup.html"
   },
 

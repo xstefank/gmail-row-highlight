@@ -3,41 +3,60 @@
 <head>
     <script src="popup.js"></script>
     <script src='jscolor.js'></script>
+    <link href="css/popup.css" rel="stylesheet" type="text/css">
 </head>
-<body style="width: 500px; height: 300px; background-color: black; color: white">
+<body>
 
+<img src="images/popupTitle.png" alt="Gmail Row Highlighter"/>
+
+<br/><br/>
 <div>
-    Read Email Color:
-<input id="userReadColorInput" class="jscolor {width:170, height:100, position:'down',
-    borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666', onFineChange: 'updateUserReadColor(this)'}">
+    <label class="colorLabel">Read Email Color:</label>
+    <input id="userReadColorInput"
+           class="jscolor {width:121, height:100, position:'down', borderColor:'#FFF', insetColor:'#FFF',
+       backgroundColor:'#666', onFineChange: 'updateUserReadColor(this)'}">
 </div>
+
+<br/>
 <div>
-    Read Email Background:
-    <input id="userReadBgColorInput" class="jscolor {width:170, height:100, position:'down',
+    <label class="colorLabel">Read Email Background:</label>
+    <input id="userReadBgColorInput" class="jscolor {width:121, height:100, position:'down',
     borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666', onFineChange: 'updateUserReadBgColor(this)'}">
 </div>
+
+<br/>
 <div>
-    Unread Email Color:
-    <input id="userUnreadColorInput" class="jscolor {width:170, height:100, position:'down',
+    <label class="colorLabel">Unread Email Color:</label>
+    <input id="userUnreadColorInput" class="jscolor {width:121, height:100, position:'down',
     borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666', onFineChange: 'updateUserUnreadColor(this)'}">
 </div>
+
+<br />
 <div>
-    Unread Email Background:
-    <input id="userUnreadBgColorInput" class="jscolor {width:170, height:100, position:'down',
+    <label class="colorLabel">Unread Email Background:</label>
+    <input id="userUnreadBgColorInput" class="jscolor {width:121, height:100, position:'down',
     borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666', onFineChange: 'updateUserUnreadBgColor(this)'}">
 </div>
+
+<br/>
 <div>
-    Selected Email Color:
-    <input id="userSelectedColorInput" class="jscolor {width:170, height:100, position:'down',
+    <label class="colorLabel">Selected Email Color:</label>
+    <input id="userSelectedColorInput" class="jscolor {width:121, height:100, position:'down',
     borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666', onFineChange: 'updateUserSelectedColor(this)'}">
 </div>
+
+<br/>
 <div>
-    Selected Email Background:
-    <input id="userSelectedBgColorInput" class="jscolor {width:170, height:100, position:'down',
+    <label class="colorLabel">Selected Email Background:</label>
+    <input id="userSelectedBgColorInput" class="jscolor {width:121, height:100, position:'down',
     borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666', onFineChange: 'updateUserSelectedBgColor(this)'}">
 </div>
 
-
+<br/>
+<div id="popupFooter">
+    This project is available on GitHub:
+    <a id="ghLink" href="https://github.com/xstefank/gmail-row-highlight">gmail-row-highlighter</a>
+</div>
 
 </body>
 </html>

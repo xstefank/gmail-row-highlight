@@ -74,3 +74,11 @@ function updateUserSelectedBgColor(jscolor) {
         value: color
     });
 }
+
+//visual
+document.addEventListener("DOMContentLoaded", function () {
+    let ghLink = document.getElementById("ghLink");
+    ghLink.addEventListener('click', function () {
+        chrome.tabs.create({url: ghLink.getAttribute("href")});
+    });
+});
