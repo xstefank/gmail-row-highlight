@@ -1,21 +1,21 @@
 
-//user colors
-const userReadColor = "#4A4A4A";
-const userReadBgColor = "#858585";
-const userUnreadColor = "#505050";
-const userUnreadBgColor = "#A0A0A0";
-const userSelectedColor = "#333A36";
-const userSelectedBgColor = "#62E544";
+//default colors
+const defReadColor = "#4A4A4A";
+const defReadBgColor = "#858585";
+const defUnreadColor = "#505050";
+const defUnreadBgColor = "#A0A0A0";
+const defSelectedColor = "#333A36";
+const defSelectedBgColor = "#62E544";
 
 
 
 var ColorTypes = {
-    userRead: "userReadColor",
-    userReadBg: "userReadBgColor",
-    userUnread: "userUnreadColor",
-    userUnreadBg: "userUnreadBgColor",
-    userSelected: "userSelectedColor",
-    userSelectedBg: "userSelectedBgColor"
+    read: "userReadColor",
+    readBg: "userReadBgColor",
+    unread: "userUnreadColor",
+    unreadBg: "userUnreadBgColor",
+    selected: "userSelectedColor",
+    selectedBg: "userSelectedBgColor"
 };
 
 //initialization
@@ -28,35 +28,35 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         initMessage = {
             from: "background",
             type: "init",
-            userReadColor: localStorage.userReadColor,
-            userReadBgColor: localStorage.userReadBgColor,
-            userUnreadColor: localStorage.userUnreadColor,
-            userUnreadBgColor: localStorage.userUnreadBgColor,
-            userSelectedColor: localStorage.userSelectedColor,
-            userSelectedBgColor: localStorage.userSelectedBgColor
+            read: localStorage.read,
+            readBg: localStorage.readBg,
+            unread: localStorage.unread,
+            unreadBg: localStorage.unreadBg,
+            selected: localStorage.selected,
+            selectedBg: localStorage.selectedBg
         };
 
         sendResponse(initMessage);
 
     } else if (request.from == "popup") {
         switch (request.colorType) {
-            case ColorTypes.userRead:
-                localStorage.userReadColor = request.value;
+            case ColorTypes.read:
+                localStorage.read = request.value;
                 break;
-            case ColorTypes.userReadBg:
-                localStorage.userReadBgColor = request.value;
+            case ColorTypes.readBg:
+                localStorage.readBg = request.value;
                 break;
-            case ColorTypes.userUnread:
-                localStorage.userUnreadColor = request.value;
+            case ColorTypes.unread:
+                localStorage.unread = request.value;
                 break;
-            case ColorTypes.userUnreadBg:
-                localStorage.userUnreadBgColor = request.value;
+            case ColorTypes.unreadBg:
+                localStorage.unreadBg = request.value;
                 break;
-            case ColorTypes.userSelected:
-                localStorage.userSelectedColor = request.value;
+            case ColorTypes.selected:
+                localStorage.selected = request.value;
                 break;
-            case ColorTypes.userSelectedBg:
-                localStorage.userSelectedBgColor = request.value;
+            case ColorTypes.selectedBg:
+                localStorage.selectedBg = request.value;
                 break;
             default:
                 throw "Undefined color type: " + request.colorType;
@@ -66,12 +66,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         contentMessage = {
             from: "background",
             type: "update",
-            userReadColor: localStorage.userReadColor,
-            userReadBgColor: localStorage.userReadBgColor,
-            userUnreadColor: localStorage.userUnreadColor,
-            userUnreadBgColor: localStorage.userUnreadBgColor,
-            userSelectedColor: localStorage.userSelectedColor,
-            userSelectedBgColor: localStorage.userSelectedBgColor
+            read: localStorage.read,
+            readBg: localStorage.readBg,
+            unread: localStorage.unread,
+            unreadBg: localStorage.unreadBg,
+            selected: localStorage.selected,
+            selectedBg: localStorage.selectedBg
         };
 
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -82,35 +82,36 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function initStorageProperties() {
-    if (localStorage.userReadColor == undefined) {
-        localStorage.userReadColor = userReadColor;
+    if (localStorage.read == undefined) {
+        localStorage.read = defReadColor;
     }
 
-    if (localStorage.userReadBgColor == undefined) {
-        localStorage.userReadBgColor = userReadBgColor;
+    if (localStorage.readBg == undefined) {
+        localStorage.readBg = defReadBgColor;
     }
 
-    if (localStorage.userUnreadColor == undefined) {
-        localStorage.userUnreadColor = userUnreadColor;
+    if (localStorage.unread == undefined) {
+        localStorage.unread = defUnreadColor;
     }
 
-    if (localStorage.userUnreadBgColor == undefined) {
-        localStorage.userUnreadBgColor = userUnreadBgColor;
+    if (localStorage.unreadBg == undefined) {
+        localStorage.unreadBg = defUnreadBgColor;
     }
 
-    if (localStorage.userSelectedColor == undefined) {
-        localStorage.userSelectedColor = userSelectedColor;
+    if (localStorage.selected == undefined) {
+        localStorage.selected = defSelectedColor;
     }
 
-    if (localStorage.userSelectedBgColor == undefined) {
-        localStorage.userSelectedBgColor = userSelectedBgColor;
+    if (localStorage.selectedBg == undefined) {
+        localStorage.selectedBg = defSelectedBgColor;
     }
 }
+
 function resetColors() {
-    localStorage.userReadColor = userReadColor;
-    localStorage.userReadBgColor = userReadBgColor;
-    localStorage.userUnreadColor = userUnreadColor;
-    localStorage.userUnreadBgColor = userUnreadBgColor;
-    localStorage.userSelectedColor = userSelectedColor;
-    localStorage.userSelectedBgColor = userSelectedBgColor;
+    localStorage.read = defReadColor;
+    localStorage.readBg = defReadBgColor;
+    localStorage.unread = defUnreadColor;
+    localStorage.unreadBg = defUnreadBgColor;
+    localStorage.selected = defSelectedColor;
+    localStorage.selectedBg = defSelectedBgColor;
 }

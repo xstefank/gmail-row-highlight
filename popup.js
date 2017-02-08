@@ -6,71 +6,45 @@ chrome.runtime.getBackgroundPage(function(bg) {
     //preserve the same color types as background page
     ColorTypes = bg.ColorTypes;
 
-    document.getElementById("userReadColorInput").jscolor.fromString(bg.localStorage.userReadColor);
-    document.getElementById("userReadBgColorInput").jscolor.fromString(bg.localStorage.userReadBgColor);
-    document.getElementById("userUnreadColorInput").jscolor.fromString(bg.localStorage.userUnreadColor);
-    document.getElementById("userUnreadBgColorInput").jscolor.fromString(bg.localStorage.userUnreadBgColor);
-    document.getElementById("userSelectedColorInput").jscolor.fromString(bg.localStorage.userSelectedColor);
-    document.getElementById("userSelectedBgColorInput").jscolor.fromString(bg.localStorage.userSelectedBgColor);
+    document.getElementById("readInput").jscolor.fromString(bg.localStorage.read);
+    document.getElementById("readBgInput").jscolor.fromString(bg.localStorage.readBg);
+    document.getElementById("unreadInput").jscolor.fromString(bg.localStorage.unread);
+    document.getElementById("unreadBgInput").jscolor.fromString(bg.localStorage.unreadBg);
+    document.getElementById("selectedInput").jscolor.fromString(bg.localStorage.selected);
+    document.getElementById("selectedBgInput").jscolor.fromString(bg.localStorage.selectedBg);
 });
 
 //update functions
 function updateUserReadColor(jscolor) {
-    let color = '#' + jscolor;
-
-    chrome.runtime.sendMessage({
-        from: "popup",
-        colorType: ColorTypes.userRead,
-        value: color
-    });
+    sendUserInputToBackground(jscolor, ColorTypes.read);
 }
 
 function updateUserReadBgColor(jscolor) {
-    let color = '#' + jscolor;
-
-    chrome.runtime.sendMessage({
-        from: "popup",
-        colorType: ColorTypes.userReadBg,
-        value: color
-    });
+    sendUserInputToBackground(jscolor, ColorTypes.readBg);
 }
 
 function updateUserUnreadColor(jscolor) {
-    let color = '#' + jscolor;
-
-    chrome.runtime.sendMessage({
-        from: "popup",
-        colorType: ColorTypes.userUnread,
-        value: color
-    });
+    sendUserInputToBackground(jscolor, ColorTypes.unread);
 }
 
 function updateUserUnreadBgColor(jscolor) {
-    let color = '#' + jscolor;
-
-    chrome.runtime.sendMessage({
-        from: "popup",
-        colorType: ColorTypes.userUnreadBg,
-        value: color
-    });
+    sendUserInputToBackground(jscolor, ColorTypes.unreadBg);
 }
 
 function updateUserSelectedColor(jscolor) {
-    let color = '#' + jscolor;
-
-    chrome.runtime.sendMessage({
-        from: "popup",
-        colorType: ColorTypes.userSelected,
-        value: color
-    });
+    sendUserInputToBackground(jscolor, ColorTypes.selected);
 }
 
 function updateUserSelectedBgColor(jscolor) {
-    let color = '#' + jscolor;
+    sendUserInputToBackground(jscolor, ColorTypes.selectedBg);
+}
+
+function sendUserInputToBackground(value, colorType) {
+    let color = '#' + value;
 
     chrome.runtime.sendMessage({
         from: "popup",
-        colorType: ColorTypes.userSelectedBg,
+        colorType: colorType,
         value: color
     });
 }

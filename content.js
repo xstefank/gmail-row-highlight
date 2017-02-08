@@ -4,21 +4,13 @@ const UNREAD_EMAIL_CLASSMAME = "zE";
 const SELECTED_EMAIL_CLASSNAME = "x7";
 const INBOX_ROW_CLASS = "zA";
 
-//default colors
-let defReadColor = null;
-let defReadBgColor = null;
-let defUnreadColor = null;
-let defUnreadBgColor = null;
-let defSelectedColor = null;
-let defSelectedBgColor = null;
-
 let currentRowElement = null;
 
 //color class
 class RowColor {
-    constructor(defColor, defBgColor, userColor, userBgColor) {
-        this.defColor = defColor;
-        this.defBgColor = defBgColor;
+    constructor(origColor, origBgColor, userColor, userBgColor) {
+        this.origColor = origColor;
+        this.origBgColor = origBgColor;
         this.userColor = userColor;
         this.userBgColor = userBgColor;
     }
@@ -70,7 +62,7 @@ function setRowColor(elem) {
         assignRowColor(elem, rowColor.userColor, rowColor.userBgColor);
         currentRowElement = elem;
     } else {
-        assignRowColor(elem, rowColor.defColor, rowColor.defBgColor)
+        assignRowColor(elem, rowColor.origColor, rowColor.origBgColor)
     }
 }
 
@@ -98,10 +90,10 @@ function pickRowColor(elem) {
  * @param rowColor the color class to be set up
  */
 function preserveDefaultColor(elem, rowColor) {
-    if (rowColor.defBgColor != null) return;
+    if (rowColor.origBgColor != null) return;
 
-    rowColor.defColor = elem.style.color;
-    rowColor.defBgColor = elem.style.backgroundColor;
+    rowColor.origColor = elem.style.color;
+    rowColor.origBgColor = elem.style.backgroundColor;
 }
 
 /**
@@ -157,20 +149,20 @@ chrome.runtime.sendMessage({
     from: "content",
     type: "init"
 }, function (response) {
-    readRowColor = new RowColor(defReadColor, defReadBgColor, response.userReadColor, response.userReadBgColor);
-    unreadRowColor = new RowColor(defUnreadColor, defUnreadBgColor, response.userUnreadColor, response.userUnreadBgColor);
-    selectedRowColor = new RowColor(defSelectedColor, defSelectedBgColor, response.userSelectedColor, response.userSelectedBgColor);
+    readRowColor = new RowColor(null, null, response.read, response.readBg);
+    unreadRowColor = new RowColor(null, null, response.unread, response.unreadBg);
+    selectedRowColor = new RowColor(null, null, response.selected, response.selectedBg);
 });
 
 //dynamic setting of different colors to the current row
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.from == "background" && request.type == "update") {
-        readRowColor.userColor = request.userReadColor;
-        readRowColor.userBgColor = request.userReadBgColor;
-        unreadRowColor.userColor = request.userUnreadColor;
-        unreadRowColor.userBgColor = request.userUnreadBgColor;
-        selectedRowColor.userColor = request.userSelectedColor;
-        selectedRowColor.userBgColor = request.userSelectedBgColor;
+        readRowColor.userColor = request.read;
+        readRowColor.userBgColor = request.readBg;
+        unreadRowColor.userColor = request.unread;
+        unreadRowColor.userBgColor = request.unreadBg;
+        selectedRowColor.userColor = request.selected;
+        selectedRowColor.userBgColor = request.selectedBg;
         reloadCurrentRow();
     }
 });
