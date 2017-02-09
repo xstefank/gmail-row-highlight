@@ -1,2 +1,18 @@
-<!-- gmail icon -->
-<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>i
+<credits>
+    <!-- gmail icon -->
+    <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a
+            href="http://www.flaticon.com" title="Flaticon">www.flaticon.com
+    </a> is licensed by
+        <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0
+            BY
+        </a>
+    </div>
+
+
+    <div>JSColor
+        <a href="http://jscolor.com/">jscolor</a>
+    </div>
+    <div>MutationSummary
+        <a href="https://github.com/rafaelw/mutation-summary">mutation-summary</a>
+    </div>
+</credits>
