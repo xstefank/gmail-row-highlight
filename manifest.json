@@ -3,7 +3,7 @@
 
   "name": "Gmail Row Highlighter",
   "description": "This extension is highlighting gmail rows with keyboard shortcuts.",
-  "version": "1.2.2",
+  "version": "1.2.3",
 
   "icons": {
     "16": "images/gmail16.png",
