@@ -19,7 +19,7 @@
     }
   ],
 
-  "content_security_policy": "script-src 'unsafe-eval' 'sha512-ntVpZa8HMJ0Z3kzI7F7KkG5rI+9Hbh1ToZUtc9FyRioi5RAqwsInE7AjBinDvQ6SDF7DuMpZb44uhLZUYVGUBg=='; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'unsafe-eval' 'sha512-ntVpZa8HMJ0Z3kzI7F7KkG5rI+9Hbh1ToZUtc9FyRioi5RAqwsInE7AjBinDvQ6SDF7DuMpZb44uhLZUYVGUBg==' 'sha512-U6P/RClAL500os+uHYUu8EOBRrKj0h2dbsFU/5U6+BfAccWV0tGsw/SMSZvL/DuuVn0H4Ym3FKYVjFYK+abUbw=='; object-src 'self'",
 
   "background": {
     "persistent": false,
