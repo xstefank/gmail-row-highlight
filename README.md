@@ -1,6 +1,8 @@
 # gmail-row-highlight
 Chrome extension for gmail row highlighting with keyboard shorcuts enabled.
 
+**IMPORTANT/DEPRECATION The maintainer of this project no longer have time for it. If someone would like to take it it's free to take.**
+
 <p align="center">
   <img style="align: center" src="images/logo.png" alt="Logo">
 </p>
